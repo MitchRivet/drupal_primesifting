@@ -1,0 +1,5 @@
+name = prime sifter
+description = enter a number and get a list of the primes that are smaller than the number you entered
+package = Custom Modules
+core = 7.x
+files[] = prime_sifting.module 

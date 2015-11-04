@@ -1,0 +1,66 @@
+<?php
+
+    //creating the prime sifting menu
+    function prime_sifting_menu() {
+      //creating an items array, first entry has key prime_sifter with an array value
+      $items['prime_sifter'] = array(
+        'title' => 'Sift that prime',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('prime_form'),
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM,
+
+      );
+
+      $items['prime_sifted_page'] = array(
+        'title' => 'Prime List',
+        'page callback' => 'prime_sifted',
+        'access callback' => TRUE,
+        'type' => MENU_CALLBACK,
+      );
+
+      return $items;
+    }
+
+    function prime_form() {
+      $form['input_number'] = array(
+        '#title' => 'Input Number',
+        '#type' => 'textfield',
+        '#description' => t('Enter the number you want sifted'),
+        '#element_validate' => array('element_validate_integer_positive'),
+        '#required' => TRUE,
+      );
+
+      $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'Sift',
+      );
+
+      return $form;
+    }
+
+    function prime_form_submit($form, &$form_state) {
+      $input_number = $form_state['values']['input_number'];
+
+      $number_array = array();
+
+      for ($i=2; $i <= $input_number; $i++) {
+        array_push($number_array, $i);
+      }
+
+      $check = 2;
+
+      foreach ($number_array as $number)
+      {
+        if (($number % $check == 0) && ($check != $number))
+        {
+          $key = array_search($number, $number_array);
+          unset($number_array[$key]);
+        }
+        $check++;
+      }
+
+
+
+
+    }
